@@ -1,23 +1,28 @@
-Split sass or js in HTML file.
---------------------------------------------------------------
-demo
+#gulp-split-sass-js
+>Code
+‘<!DOCTYPE html>
 <html>
-<head></head>
-<body>
+<head>
+    <title></title>
+    </head>
+    <body>
+    <h1>test</h1>
     <script type="text/sass">
-           //sass
-           .body{background:$red};
-    </script>
-    <script type="text/amd">
-           //js
-           define([],function(){
-              return function(){}; 
-           });
-    </script>
-</body>
-</html>
-----------------------------------------------------------------
-dir                   dir
- |-a.html  => split => |-a.html
-                       |-a.sass
+        .body{
+                        background:#fff;
+                                .test{
+                                                background:#000;
+                                                        }
+                                                            }
+                                                            </script>
+                                                            <script type="text/amd">
+                                                                define([],function(){
+                                                                            return function(){
+                                                                                            //do something;
+                                                                                                    };
+                                                                                                        });
+                                                                </script>
+                                                                </body>
+                                                                </html>’
+
                        |-a.js
