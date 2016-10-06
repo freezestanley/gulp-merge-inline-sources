@@ -1,28 +1,7 @@
-#gulp-split-sass-js
->Code
-‘<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    </head>
-    <body>
-    <h1>test</h1>
-    <script type="text/sass">
-        .body{
-                        background:#fff;
-                                .test{
-                                                background:#000;
-                                                        }
-                                                            }
-                                                            </script>
-                                                            <script type="text/amd">
-                                                                define([],function(){
-                                                                            return function(){
-                                                                                            //do something;
-                                                                                                    };
-                                                                                                        });
-                                                                </script>
-                                                                </body>
-                                                                </html>’
+gulp-split-sass-js
 
-                       |-a.js
+split sass|js in html
+script type="text/sass"  to  scss file
+script type="text/amd"  to js file
+
+
