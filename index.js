@@ -34,7 +34,7 @@ module.exports =function(option){
             }
             if(file.isBuffer()){
                 var hml = file.contents.toString();
-                var $ = cheerio.load(hml);
+                var $ = cheerio.load(hml,{decodeEntities: false});
               
                 $('script[type="text/sass"]').each(function(index,ele){
                     var sass = $(ele).html();
