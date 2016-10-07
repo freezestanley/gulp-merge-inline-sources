@@ -32,40 +32,36 @@ module.exports =function(option){
             if ( file.isStream() ) {
                 return callback(new gutil.PluginError('gulp-split-sass-js', 'Streaming not supported') );
             }
-            if(file.isBuffer()){
-                var hml = file.contents.toString();
+             if(file.isBuffer()){
                 var $ = cheerio.load(hml,{decodeEntities: false});
-              
                 $('script[type="text/sass"]').each(function(index,ele){
                     var sass = $(ele).html();
                     $(ele).remove();
-                    sasslist.push(sass);
+                    sasslist+=sass;
                 });
                 $('script[type="text/js"]').each(function(index,ele){
                     amd = $(ele).html();
                     $(ele).remove();
+                    
                 });
-
-
+                
                 var upath = '../'+path.relative(process.cwd()+'/dev',filePath)+'/';
                
                 if(amd){
                     var jsFile = new File({path:upath+filename+'.js'});
-                    jsFile.contents = new Buffer(amd);
+                    jsFile.contents = new Buffer(amd,'utf8');
                     this.push(jsFile);
                 };
-                if(sasslist.length>0){
+                if(sasslist){
                     var saFile = new File({path:upath+filename+'.scss'});
-                    saFile.contents = new Buffer(sasslist.join());
+                    saFile.contents = new Buffer(sasslist,'utf8');
                     this.push(saFile);
-                }
+                };
+               
 
-
-
-
-                file.contents = new Buffer($.html());
-                callback(null,file);
+                file.contents = new Buffer($.html(),'utf8');
                 this.push(file);
+                callback(null,file);
             }; 
      };
      function flurFun(callback){
