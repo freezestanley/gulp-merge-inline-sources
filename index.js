@@ -21,8 +21,8 @@ module.exports =function(option){
     
     var pathurl = path.resolve(process.cwd(),'./');
     function transFun(file,encoding,callback){
-            var sasslist = [],
-                amd,
+            var sasslist ='',
+                amd='',
                 filePath = path.dirname(file.path),
                 filename = path.basename(file.path,'.html');
 
