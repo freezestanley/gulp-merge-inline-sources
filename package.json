@@ -1,6 +1,6 @@
 {
   "name": "gulp-split-sass-js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "cut sass/js to file for gulp plugins",
   "main": "index.js",
   "scripts": {

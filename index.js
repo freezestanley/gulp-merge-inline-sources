@@ -45,12 +45,16 @@ module.exports =function(option){
                     amd = $(ele).html();
                     $(ele).remove();
                 });
+                if(amd){
                 var jsFile = new File({path:'./'+filename+'.js'});
                 jsFile.contents = new Buffer(amd);
                 this.push(jsFile);
+                };
+                if(sasslist.length>0){
                 var saFile = new File({path:'./'+filename+'.scss'});
                 saFile.contents = new Buffer(sasslist.join());
                 this.push(saFile);
+                }
                 file.contents = new Buffer($.html());
                 callback(null,file);
                 this.push(file);
