@@ -45,16 +45,24 @@ module.exports =function(option){
                     amd = $(ele).html();
                     $(ele).remove();
                 });
+
+
+                var upath = '../'+path.relative(process.cwd()+'/dev',filePath)+'/';
+               
                 if(amd){
-                var jsFile = new File({path:'./'+filename+'.js'});
-                jsFile.contents = new Buffer(amd);
-                this.push(jsFile);
+                    var jsFile = new File({path:upath+filename+'.js'});
+                    jsFile.contents = new Buffer(amd);
+                    this.push(jsFile);
                 };
                 if(sasslist.length>0){
-                var saFile = new File({path:'./'+filename+'.scss'});
-                saFile.contents = new Buffer(sasslist.join());
-                this.push(saFile);
+                    var saFile = new File({path:upath+filename+'.scss'});
+                    saFile.contents = new Buffer(sasslist.join());
+                    this.push(saFile);
                 }
+
+
+
+
                 file.contents = new Buffer($.html());
                 callback(null,file);
                 this.push(file);
