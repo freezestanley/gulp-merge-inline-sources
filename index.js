@@ -13,10 +13,10 @@ var PluginError = gutil.PluginError;
 
 module.exports =function(option){
     function log( msg ){       
-        gutil.log('gulp-merge-inline-resources:' , msg );
+        gutil.log('gulp-split-sass-js:' , msg );
     }
     function logError ( msg ){   
-         gutil.log( gutil.colors.red('gulp-merge-inline-resources:' ), msg );
+         gutil.log( gutil.colors.red('gulp-split-sass-js:' ), msg );
     };
     
     var pathurl = path.resolve(process.cwd(),'./');
@@ -30,7 +30,7 @@ module.exports =function(option){
                 return callback( null, file );
             }
             if ( file.isStream() ) {
-                return callback(new gutil.PluginError('gulp-merge-inline-resources', 'Streaming not supported') );
+                return callback(new gutil.PluginError('gulp-split-sass-js', 'Streaming not supported') );
             }
             if(file.isBuffer()){
                 var hml = file.contents.toString();
@@ -41,7 +41,7 @@ module.exports =function(option){
                     $(ele).remove();
                     sasslist.push(sass);
                 });
-                $('script[type="text/amd"]').each(function(index,ele){
+                $('script[type="text/js"]').each(function(index,ele){
                     amd = $(ele).html();
                     $(ele).remove();
                 });
