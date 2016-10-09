@@ -13,7 +13,7 @@ var PluginError = gutil.PluginError;
 
 
 
-module.exports =function(option){
+function splitFile(option){
     var sassMerge = option?(option.sassMerge || false):false;
     var jsMerge = option?(option.jsMerge || false):false;
     var prefix = option.prefix || '_';
@@ -121,3 +121,55 @@ module.exports =function(option){
 
     return throughgulp(transFun,flurFun);    
 };
+
+splitFile.direct = function(option){
+     function log( msg ){       
+          gutil.log('gulp-concat-directory:' , msg );
+    };
+    function logError ( msg ){   
+           gutil.log( gutil.colors.red('gulp-concat-directory:' ), msg );
+    };
+
+    var dir = {},
+        filePath,
+        fileName,
+        fileExt;
+
+    function transFun(file,encoding,cb){
+        filePath = path.dirname(file.path),
+        fileName = filePath.split('/')[filePath.split('/').length-1],
+        fileExt  = path.extname(path.basename(file.path));
+
+
+        if ( file.isNull() || file.isDirectory()) {
+                return cb( null, file );
+            }
+
+        if ( file.isStream() ) {
+                return cb(new gutil.PluginError('gulp-split-sass-js', 'Streaming not supported') );
+            }
+        if(file.isBuffer()){
+                if(!dir[filePath]){
+                    dir[filePath]= {name:fileName,content:file.contents.toString()};
+                }else{
+                    console.log('content='+dir[filePath]);
+                    dir[filePath].content += file.contents.toString();
+                };
+                dir[filePath].content += '/** "'+file.path+'" **/'
+            cb();
+        };
+    };
+    function flurFun(cb){
+        for(var i in dir){
+            var upath = './'+path.join('./',path.relative(path.join(process.cwd(),option.In),i));
+            var file = new File({path:upath+'/'+dir[i].name+fileExt});
+            file.contents = new Buffer(dir[i].content,'utf8');
+            this.push(file);
+        };
+        cb();
+        
+    };
+    return throughgulp(transFun,flurFun);
+}
+
+module.exports = splitFile;
